@@ -13,5 +13,8 @@ X = df[features]
 y = df[target]
 
 print(df.head())
+
 print(df.shape)
-print(df.columns)
+#print(df.columns)
+#print(df.info())
+print(df.isna().sum())

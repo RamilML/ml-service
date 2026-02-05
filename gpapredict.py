@@ -30,7 +30,7 @@ train_idx = indices[n_test:]
 X_train, X_test = X_np[train_idx], X_np[test_idx]
 y_train, y_test = y_np[train_idx], y_np[test_idx]
 w = np.array([0,0,0,0,0])
-#print("Train size:", X_train.shape, "Test size:", X_test.shape)
+print("Train size:", X_train.shape, "Test size:", X_test.shape)
 mu = X_train.mean(axis = 0)
 sigma = X_train.std(axis = 0)
 X_train_std = (X_train - mu) / sigma
@@ -65,10 +65,10 @@ test_mse = np.mean((y_test - y_test_pred) ** 2)
 train_mae = np.mean(np.abs(y_train - y_train_pred))
 test_mae = np.mean(np.abs(y_test - y_test_pred))
 
-print("Train MSE:", train_mse)
-print("Test  MSE:", test_mse)
-print("Train MAE:", train_mae)
-print("Test  MAE:", test_mae)
+# print("Train MSE:", train_mse)
+# print("Test  MSE:", test_mse)
+# print("Train MAE:", train_mae)
+# print("Test  MAE:", test_mae)
 # feature_idx = features.index("StudyTimeWeekly") + 1  # +1 из-за bias
 # x_line = np.zeros((100, x_train.shape[1]))
 # x_line[:, 0] = 1  # bias

@@ -30,21 +30,25 @@ train_idx = indices[n_test:]
 
 X_train, X_test = X_np[train_idx], X_np[test_idx]
 y_train, y_test = y_np[train_idx], y_np[test_idx]
-w = np.array([0,0,0,0,0,0])
-print("Train size:", X_train.shape, "Test size:", X_test.shape)
-
+w = np.array([0,0,0,0,0])
+#print("Train size:", X_train.shape, "Test size:", X_test.shape)
+mu = X_train.mean(axis = 0)
+sigma = X_train.std(axis = 0)
+X_train_std = (X_train - mu) / sigma
 ones_train = np.ones((X_train.shape[0], 1))
 ones_test = np.ones((X_test.shape[0], 1))
-x_train = np.hstack((ones_train, X_train))
-x_test = np.hstack((ones_test, X_test))
+x_train = np.hstack((ones_train, X_train_std))
+X_test_std = (X_test - mu) / sigma
+x_test = np.hstack((ones_test, X_test_std))
 lm = 0.01
 nm = 0.0003
 def model(w, x):
     return x @ w 
 def loss(y, x, w):
     return np.mean((y - model(w,x))**2)
-def Dloss(y,x,w):
-    grad = (2/n) * (x.T @ (model(w,x) - y))
+def Dloss(y, x, w):
+    n_local = len(y)
+    grad = (2/n_local) * (x.T @ (model(w,x) - y))
     grad[1:] += 2 * lm * w[1:]
     return grad
 
@@ -52,10 +56,21 @@ for _ in range(200000):
     w = w - nm*Dloss(y_train,x_train,w)
 print (w)
 
-arr = list(map(int,input().split()))
-np_ar = np.array(arr)
-print(model(w,np_ar))
-# feature_idx = features.index("ParentalEducation") + 1  # +1 из-за bias
+y_train_pred = model(w, x_train)
+y_test_pred = model(w, x_test)
+
+
+train_mse = np.mean((y_train - y_train_pred) ** 2)
+test_mse = np.mean((y_test - y_test_pred) ** 2)
+
+train_mae = np.mean(np.abs(y_train - y_train_pred))
+test_mae = np.mean(np.abs(y_test - y_test_pred))
+
+print("Train MSE:", train_mse)
+print("Test  MSE:", test_mse)
+print("Train MAE:", train_mae)
+print("Test  MAE:", test_mae)
+# feature_idx = features.index("StudyTimeWeekly") + 1  # +1 из-за bias
 # x_line = np.zeros((100, x_train.shape[1]))
 # x_line[:, 0] = 1  # bias
 # x_line[:, feature_idx] = np.linspace(

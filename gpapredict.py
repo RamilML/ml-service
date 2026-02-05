@@ -8,7 +8,8 @@ features = [
     "Gender",
     "StudyTimeWeekly",
     "Absences",
-    "Extracurricular"
+    "Extracurricular",
+    "ParentalEducation"
 ]
 target = "GPA"
 X = df[features]
@@ -29,7 +30,7 @@ train_idx = indices[n_test:]
 
 X_train, X_test = X_np[train_idx], X_np[test_idx]
 y_train, y_test = y_np[train_idx], y_np[test_idx]
-w = np.array([0,0,0,0,0])
+w = np.array([0,0,0,0,0,0])
 print("Train size:", X_train.shape, "Test size:", X_test.shape)
 
 ones_train = np.ones((X_train.shape[0], 1))
@@ -51,7 +52,10 @@ for _ in range(200000):
     w = w - nm*Dloss(y_train,x_train,w)
 print (w)
 
-# feature_idx = features.index("StudyTimeWeekly") + 1  # +1 из-за bias
+arr = list(map(int,input().split()))
+np_ar = np.array(arr)
+print(model(w,np_ar))
+# feature_idx = features.index("ParentalEducation") + 1  # +1 из-за bias
 # x_line = np.zeros((100, x_train.shape[1]))
 # x_line[:, 0] = 1  # bias
 # x_line[:, feature_idx] = np.linspace(
@@ -78,7 +82,7 @@ print (w)
 #     color="red",
 #     label="Model (slice)"
 # )
-# plt.xlabel("StudyTimeWeekly")
+# plt.xlabel("ParentalEducation")
 # plt.ylabel("GPA")
 # plt.legend()
 # plt.show()

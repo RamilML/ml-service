@@ -8,7 +8,8 @@ features = [
     "Gender",
     "StudyTimeWeekly",
     "Absences",
-    "Extracurricular"
+    "Extracurricular",
+    "ParentalEducation"
 ]
 target = "GPA"
 X = df[features]
@@ -96,7 +97,7 @@ test_mae = np.mean(np.abs(y_test - y_test_pred))
 #     color="red",
 #     label="Model (slice)"
 # )
-# plt.xlabel("StudyTimeWeekly")
+# plt.xlabel("ParentalEducation")
 # plt.ylabel("GPA")
 # plt.legend()
 # plt.show()
